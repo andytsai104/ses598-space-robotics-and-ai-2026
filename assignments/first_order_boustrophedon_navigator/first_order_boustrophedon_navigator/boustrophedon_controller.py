@@ -19,9 +19,9 @@ class BoustrophedonController(Node):
         self.declare_parameters(
             namespace='',
             parameters=[
-                ('Kp_linear', 1.2),         # Linear proportional gain: increase for more aggressive response
+                ('Kp_linear', 1.2),          # Linear proportional gain: increase for more aggressive response
                 ('Kd_linear', 0.02),         # Linear derivative gain: increase to dampen oscillations
-                ('Kp_angular', 9.0),        # Angular proportional gain: increase for sharper turns
+                ('Kp_angular', 9.0),         # Angular proportional gain: increase for sharper turns
                 ('Kd_angular', 0.03),        # Angular derivative gain: increase to dampen angular oscillations
                 ('spacing', 0.5)
             ]
@@ -132,9 +132,11 @@ class BoustrophedonController(Node):
             self.get_logger().info('Lawnmower pattern complete')
             if self.cross_track_errors:
                 final_avg_error = sum(self.cross_track_errors) / len(self.cross_track_errors)
+                max_error = max(self.cross_track_errors)
                 self.get_logger().info(f'Final average cross-track error: {final_avg_error:.3f}')
+                self.get_logger().info(f'Maximum cross-track error: {max_error:.3f}')
             self.timer.cancel()
-            # self.plot_data()
+            self.plot_data()
             return
 
         cross_track_error = self.calculate_cross_track_error()

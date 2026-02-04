@@ -19,10 +19,10 @@ class BoustrophedonController(Node):
         self.declare_parameters(
             namespace='',
             parameters=[
-                ('Kp_linear', 1.0),
-                ('Kd_linear', 0.1),
-                ('Kp_angular', 1.0),
-                ('Kd_angular', 0.1),
+                ('Kp_linear', 1.2),         # Linear proportional gain: increase for more aggressive response
+                ('Kd_linear', 0.02),         # Linear derivative gain: increase to dampen oscillations
+                ('Kp_angular', 9.0),        # Angular proportional gain: increase for sharper turns
+                ('Kd_angular', 0.03),        # Angular derivative gain: increase to dampen angular oscillations
                 ('spacing', 0.5)
             ]
         )
@@ -134,7 +134,7 @@ class BoustrophedonController(Node):
                 final_avg_error = sum(self.cross_track_errors) / len(self.cross_track_errors)
                 self.get_logger().info(f'Final average cross-track error: {final_avg_error:.3f}')
             self.timer.cancel()
-            self.plot_data()
+            # self.plot_data()
             return
 
         cross_track_error = self.calculate_cross_track_error()
@@ -190,6 +190,7 @@ class BoustrophedonController(Node):
         return SetParametersResult(successful=True)
 
     def plot_data(self):
+        media_path = "./src/first_order_boustrophedon_navigator/media/"
         trajectory = np.array(self.trajectory)
         velocities = np.array(self.velocities)
 
@@ -199,7 +200,7 @@ class BoustrophedonController(Node):
         plt.title("Cross-Track Error Over Time")
         plt.xlabel("Time Step")
         plt.ylabel("Error")
-        plt.savefig("cross_track_error.png")
+        plt.savefig(media_path + "cross_track_error.png")
 
         # Plot Trajectory
         plt.figure()
@@ -209,7 +210,7 @@ class BoustrophedonController(Node):
         plt.xlabel("X")
         plt.ylabel("Y")
         plt.legend()
-        plt.savefig("trajectory.png")
+        plt.savefig(media_path + "trajectory.png")
 
         # Plot Velocity Profiles
         plt.figure()
@@ -219,7 +220,7 @@ class BoustrophedonController(Node):
         plt.xlabel("Time Step")
         plt.ylabel("Velocity")
         plt.legend()
-        plt.savefig("velocity_profiles.png")
+        plt.savefig(media_path + "velocity_profiles.png")
 
         self.get_logger().info("Plots saved as PNG files.")
 

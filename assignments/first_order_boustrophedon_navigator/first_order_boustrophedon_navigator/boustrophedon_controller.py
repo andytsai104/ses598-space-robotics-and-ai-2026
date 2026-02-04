@@ -16,13 +16,23 @@ class BoustrophedonController(Node):
         super().__init__('lawnmower_controller')
         
         # Declare parameters with default values
+        # self.declare_parameters(
+        #     namespace='',
+        #     parameters=[
+        #         ('Kp_linear', 1.2),          # Linear proportional gain: increase for more aggressive response
+        #         ('Kd_linear', 0.02),         # Linear derivative gain: increase to dampen oscillations
+        #         ('Kp_angular', 9.0),         # Angular proportional gain: increase for sharper turns
+        #         ('Kd_angular', 0.03),        # Angular derivative gain: increase to dampen angular oscillations
+        #         ('spacing', 0.5)
+        #     ]
+        # )
         self.declare_parameters(
             namespace='',
             parameters=[
-                ('Kp_linear', 1.2),          # Linear proportional gain: increase for more aggressive response
-                ('Kd_linear', 0.02),         # Linear derivative gain: increase to dampen oscillations
-                ('Kp_angular', 9.0),         # Angular proportional gain: increase for sharper turns
-                ('Kd_angular', 0.03),        # Angular derivative gain: increase to dampen angular oscillations
+                ('Kp_linear', 1.0),          # Linear proportional gain: increase for more aggressive response
+                ('Kd_linear', 0.1),         # Linear derivative gain: increase to dampen oscillations
+                ('Kp_angular', 0.1),         # Angular proportional gain: increase for sharper turns
+                ('Kd_angular', 10.0),        # Angular derivative gain: increase to dampen angular oscillations
                 ('spacing', 0.5)
             ]
         )

@@ -1,217 +1,190 @@
-# First-Order Boustrophedon Navigator
-<img width="503" height="536" alt="Bad Boustrophedon Pattern" src="https://github.com/user-attachments/assets/5f6404fa-77f5-419f-80b2-93810108a7e7" />
+# First-Order Boustrophedon Navigator (ROS 2 Turtlesim)
 
-<img width="488" height="529" alt="Good Boustrophedon Pattern" src="https://github.com/user-attachments/assets/332b2eee-8721-4475-9716-35203dc5ebba" />
+**Author:** Andy Tsai
+**Course:** SES 598 – Space Robotics and AI (Spring 2026)
 
-In this assignment, you will understand the provided code in ROS2 with Turtlesim, and refactor and/or tune the navigator to implement a precise lawnmower survey (a boustrophedon pattern). The current code will do the first pattern shown above, which is not a uniform lawnmower survey, shown in the second figure. 
+---
 
-Modify the code to meet the requirements for a uniform survey. 
+## Overview
 
-## Background
-Boustrophedon patterns (from Greek: "ox-turning", like an ox drawing a plow) are fundamental coverage survey trajectories useful in space exploration and Earth observation. These patterns are useful for:
+This project implements and tunes a **first-order PD controller** to generate a **boustrophedon (lawnmower) coverage pattern** in ROS 2 using `turtlesim`.
+The goal is to achieve **uniform coverage**, **smooth motion**, and **low cross-track error (CTE)** by systematically tuning controller gains and the path spacing parameter.
 
-- **Space Exploration**: Rovers could use boustrophedon patterns to systematically survey areas of interest, ensuring complete coverage when searching for geological samples or mapping terrain. However, due to energy constraints, informative paths are usually optimized, and this results in paths that are sparser than complete coverage sampling, and may still produce high-accuracy reconstructions. 
-  
-- **Earth Observation**: Aerial vehicles employ these patterns for:
-  - Agricultural monitoring and precision farming
-  - Search and rescue operations
-  - Environmental mapping and monitoring
-  - Geological or archaeological surveys
-  
-- **Ocean Exploration**: Autonomous underwater vehicles (AUVs) use boustrophedon patterns to:
-  - Map the ocean floor
-  - Search for shipwrecks or aircraft debris
-  - Monitor marine ecosystems
-  
-The efficiency and accuracy of these surveys depend heavily on the robot's ability to follow the prescribed path with minimal deviation (cross-track error). This assignment simulates these real-world challenges in a 2D environment using a first-order dynamical system (the turtlesim robot).
+All experiments follow a **one-parameter-at-a-time** tuning strategy to clearly isolate the effect of each parameter.
 
-## Objective
-Tune a PD controller to make a first-order system execute the most precise boustrophedon pattern possible. The goal is to minimize the cross-track error while maintaining smooth motion.
+---
 
-## Learning Outcomes
-- Understanding PD control parameters and their effects on first-order systems
-- Practical experience with controller tuning
-- Analysis of trajectory tracking performance
-- ROS2 visualization and debugging
+## Key Components
 
-## Prerequisites
+* **PD Controller** for linear and angular velocity
+* **Boustrophedon path generator** (waypoint-based)
+* **Performance evaluation** using:
 
-### System Requirements
-Choose one of the following combinations:
-- Ubuntu 22.04 + ROS2 Humble
-- Ubuntu 23.04 + ROS2 Iron
-- Ubuntu 23.10 + ROS2 Iron
-- Ubuntu 24.04 + ROS2 Jazzy
+  * Cross-track error (average & max)
+  * Trajectory visualization
+  * Velocity profiles (`rqt_plot`)
 
-### Required Packages
-```bash
-sudo apt install ros-$ROS_DISTRO-turtlesim
-sudo apt install ros-$ROS_DISTRO-rqt*
+---
+
+## Package Structure
+
+```text
+first_order_boustrophedon_navigator/
+├── config/                 # Parameter YAML files
+├── launch/                 # ROS 2 launch files
+├── scripts/                # Controller and helper scripts
+├── resource/               # ROS package resources
+├── media/                  # Experiment results (organized by parameter setting)
+│   ├── default_params/
+│   ├── 10xKp_linear/
+│   ├── 10xKd_linear/
+│   ├── 10xKp_angular/
+│   ├── 10xKd_angular/
+│   ├── 2xSpacing/
+|   ├── optimal_params/
+│   └── real_time_inspection.png
+├── README.md
+├── package.xml
+└── setup.py
 ```
 
-### Python Dependencies
-```bash
-pip3 install numpy matplotlib
+Each folder under `media/` contains:
+
+* `path.png` – TurtleSim trajectory
+* `rqt_plot.png` – Pose and velocity plots
+* `cross_track_error.png` (when applicable)
+
+This structure enables **direct visual comparison** across experiments.
+
+---
+
+## Default Parameters (Baseline)
+
+```text
+Kp_linear   = 1.0
+Kd_linear   = 0.1
+Kp_angular  = 1.0
+Kd_angular  = 0.1
+spacing     = 0.5
 ```
 
-## The Challenge
+**Baseline performance:**
 
-### 1. Controller Tuning (60 points)
-Use rqt_reconfigure to tune the following PD controller parameters in real-time:
-```python
-# Controller parameters to tune
-self.Kp_linear = 1.0   # Proportional gain for linear velocity
-self.Kd_linear = 0.1   # Derivative gain for linear velocity
-self.Kp_angular = 1.0  # Proportional gain for angular velocity
-self.Kd_angular = 0.1  # Derivative gain for angular velocity
+* Average CTE ≈ **0.996**
+* Maximum CTE ≈ **2.111**
+
+Large errors occur primarily during **turns and line transitions**, motivating gain tuning.
+
+![default terminal log](./media/default_params/terminal_log.png)
+
+---
+
+## Tuning Methodology
+
+1. Tune **PD gains first** (controller stability)
+2. Adjust **spacing last** (path geometry)
+3. Scale one parameter at a time (e.g., `10xKp_angular`)
+4. Evaluate using trajectory shape, CTE, and velocity signals
+
+![Real-time data inspection](./media/real_time_inspection.png)
+---
+
+## Gain Interpretation (from Experiments)
+
+* **Kp_linear**: Determines whether and how strongly the turtle reaches waypoints
+* **Kd_linear**: Controls oscillation near waypoints (damping)
+* **Kp_angular**: Controls turning sharpness and heading correction
+* **Kd_angular**: Damps angular oscillations during cornering
+
+Excessive gains consistently lead to oscillation or unstable behavior.
+
+---
+
+## Optimal Parameters
+
+```text
+Kp_linear   = 1.2
+Kd_linear   = 0.02
+Kp_angular  = 9.0
+Kd_angular  = 0.03
+spacing     = 0.5
 ```
 
-Performance Metrics:
-- Average cross-track error (25 points)
-- Maximum cross-track error (15 points)
-- Smoothness of motion (10 points)
-- Cornering performance (10 points)
+**Final performance:**
 
-### 2. Pattern Parameters (20 points)
-Optimize the boustrophedon pattern parameters:
-```python
-# Pattern parameters to tune
-self.spacing = 1.0     # Spacing between lines
-```
-- Coverage efficiency (10 points)
-- Pattern completeness (10 points)
+* Average CTE ≈ **0.061**
+* Maximum CTE ≈ **0.180**
 
-### 3. Analysis and Documentation (20 points)
-Provide a detailed analysis of your tuning process:
-- Methodology used for tuning
-- Performance plots and metrics
-- Challenges encountered and solutions
-- Comparison of different parameter sets
+The turtle follows a clean and uniform lawnmower pattern with stable turns.
 
-## Getting Started
+![optimal terminal log](./media/optimal_params/terminal_log.png)
 
-### Repository Setup
-1. Fork the course repository:
-   - Visit: https://github.com/DREAMS-lab/RAS-SES-598-Space-Robotics-and-AI
-   - Click "Fork" in the top-right corner
-   - Select your GitHub account as the destination
+---
 
-2. Clone your fork (outside of ros2_ws):
-```bash
-cd ~/
-git clone https://github.com/YOUR_USERNAME/RAS-SES-598-Space-Robotics-and-AI.git
-```
+## Running the Project
 
-3. Create a symlink to the assignment in your ROS2 workspace:
-```bash
-cd ~/ros2_ws/src
-ln -s ~/RAS-SES-598-Space-Robotics-and-AI/assignments/first_order_boustrophedon_navigator .
-```
-
-### Building and Running
-1. Build the package:
-```bash
-cd ~/ros2_ws
-colcon build --packages-select first_order_boustrophedon_navigator
-source install/setup.bash
-```
-
-2. Launch the demo:
 ```bash
 ros2 launch first_order_boustrophedon_navigator boustrophedon.launch.py
 ```
 
-3. Monitor performance:
-```bash
-# View cross-track error as a number
-ros2 topic echo /cross_track_error
+Optional visualization:
 
-# Or view detailed statistics in the launch terminal
+```bash
+rqt_plot /turtle1/pose/x /turtle1/pose/y \
+         /turtle1/cmd_vel/linear/x /turtle1/cmd_vel/angular/z
 ```
 
-4. Visualize trajectory and performance:
-```bash
-ros2 run rqt_plot rqt_plot
-```
-Add these topics:
-- /turtle1/pose/x
-- /turtle1/pose/y
-- /turtle1/cmd_vel/linear/x
-- /turtle1/cmd_vel/angular/z
-- /cross_track_error
+---
 
-<img width="1385" height="542" alt="image" src="https://github.com/user-attachments/assets/54e15cb9-f60a-48df-b337-2c9c4d54da77" />
+## Results Summary
 
-## Evaluation Criteria
+Below are visual demonstrations of how different parameter settings affect the robot behavior. Each animation shows the TurtleSim trajectory under a specific configuration.
 
-1. Controller Performance (60%)
-   - Average cross-track error < 0.2 units (25%)
-   - Maximum cross-track error < 0.5 units (15%)
-   - Smooth velocity profiles (10%)
-   - Clean cornering behavior (10%)
+### Baseline (Default Parameters)
 
-2. Pattern Quality (20%)
-   - Even spacing between lines
-   - Complete coverage of target area
-   - Efficient use of space
+![Baseline Demo](media/default_params/path.gif)
 
-3. Documentation (20%)
-   - Clear explanation of tuning process
-   - Well-presented performance metrics
-   - Thoughtful analysis of results
+### High Angular Gains
 
-## Submission Requirements
+* **10xKp_angular**: sharper turns with visible oscillations
 
-1. GitHub Repository:
-   - Commit messages should be descriptive
+![10xKp_angular Demo](media/10xKp_angular/path.gif)
 
-2. Documentation in Repository:
-   - Update the README.md in your fork with:
-     - Final parameter values with justification
-     - Performance metrics and analysis
-     - Plots showing:
-       - Cross-track error over time
-       - Trajectory plot
-       - Velocity profiles
-     - Discussion of tuning methodology
-     - Challenges and solutions
+* **10xKd_angular**: excessive damping leading to unstable oscillatory motion
 
-3. Submit your work:
-   - Submit the URL of your GitHub repository
-   - Ensure your repository is public
-   - Final commit should be before the deadline
-<img width="1211" height="879" alt="Example terminal debug outputs for controller" src="https://github.com/user-attachments/assets/e25cf4d5-898d-425c-897a-1664a5762550" />
+![10xKd_angular Demo](media/10xKd_angular/path.gif)
 
-## Tips for Success
-- Start with low gains and increase gradually
-- Test one parameter at a time
-- Pay attention to both straight-line tracking and cornering
-- Use rqt_plot to visualize performance in real-time
-- Consider the trade-off between speed and accuracy
+### High Linear Gains
 
-## Grading Rubric
-- Perfect tracking (cross-track error < 0.2 units): 100%
-- Good tracking (cross-track error < 0.5 units): 90%
-- Acceptable tracking (cross-track error < 0.8 units): 80%
-- Poor tracking (cross-track error > 0.8 units): 60% or lower
+* **10xKp_linear**: failure to converge to the first waypoint
 
-Note: Final grade will also consider documentation quality and analysis depth.
+![10xKp_linear Demo](media/10xKp_linear/path.gif)
 
-## Extra Credit (10 points)
-Create and implement a custom ROS2 message type to publish detailed performance metrics:
-- Define a custom message type with fields for:
-  - Cross-track error
-  - Current velocity
-  - Distance to next waypoint
-  - Completion percentage
-  - Other relevant metrics
-- Implement the message publisher in your node
-- Document the message structure and usage
+* **10xKd_linear**: oscillations near waypoints and distorted path tracking
 
-This will demonstrate understanding of:
-- ROS2 message definitions
-- Custom interface creation
-- Message publishing patterns
+![10xKd_linear Demo](media/10xKd_linear/path.gif)
 
-## Acknowledgements: Aldrin Inbaraj A, Arizona State University. 
+### Spacing Effect
 
+* **2xSpacing**: wider coverage pattern with similar controller behavior
+
+![2xSpacing Demo](./media/2xSpacing/path.png)
+
+### Final Tuned Parameters
+
+The final configuration achieves smooth motion and a uniform lawnmower pattern.
+
+![Optimal Parameters Demo](./media/optimal_params/path.png)
+
+---
+
+## Notes
+
+* All plots are generated automatically and saved as PNG files
+* Experiments are fully reproducible using the provided launch files
+
+---
+
+## License
+
+For academic use only (course assignment).

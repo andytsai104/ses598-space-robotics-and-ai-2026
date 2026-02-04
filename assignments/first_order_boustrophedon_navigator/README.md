@@ -12,6 +12,8 @@ The goal is to achieve **uniform coverage**, **smooth motion**, and **low cross-
 
 All experiments follow a **one-parameter-at-a-time** tuning strategy to clearly isolate the effect of each parameter.
 
+Details of this assignment can be found in [assginment_details](./assignment_details.md).
+
 ---
 
 ## Key Components
@@ -141,40 +143,64 @@ rqt_plot /turtle1/pose/x /turtle1/pose/y \
 Below are visual demonstrations of how different parameter settings affect the robot behavior. Each animation shows the TurtleSim trajectory under a specific configuration.
 
 ### Baseline (Default Parameters)
-
-![Baseline Demo](media/default_params/path.gif)
+<p align="center">
+  <img src="./media/default_params/path.gif" width="600" />
+</p>
 
 ### High Angular Gains
 
-* **10xKp_angular**: sharper turns with visible oscillations
+* **10xKp_angular**
+<p align="center">
+  <img src="./media/10xKp_angular/path.gif" width="600" />
+  <br>
+  <b>Sharper turns with visible oscillations.</b>
+</p>
 
-![10xKp_angular Demo](media/10xKp_angular/path.gif)
+* **10xKd_angular**
 
-* **10xKd_angular**: excessive damping leading to unstable oscillatory motion
-
-![10xKd_angular Demo](media/10xKd_angular/path.gif)
+<p align="center">
+  <img src="./media/10xKd_angular/path.gif" width="600" />
+  <br>
+  <b>Excessive damping leading to unstable oscillatory motion.</b>
+</p>
 
 ### High Linear Gains
 
-* **10xKp_linear**: failure to converge to the first waypoint
+* **10xKp_linear**
 
-![10xKp_linear Demo](media/10xKp_linear/path.gif)
+<p align="center">
+  <img src="./media/10xKp_linear/path.gif" width="600" />
+  <br>
+  <b>Failure to converge to the first waypoint.</b>
+</p>
 
-* **10xKd_linear**: oscillations near waypoints and distorted path tracking
+* **10xKd_linear**
 
-![10xKd_linear Demo](media/10xKd_linear/path.gif)
+<p align="center">
+  <img src="./media/10xKd_linear/path.gif" width="600" />
+  <br>
+  <b>Oscillations near waypoints and distorted path tracking.</b>
+</p>
 
 ### Spacing Effect
 
-* **2xSpacing**: wider coverage pattern with similar controller behavior
+* **2xSpacing**
 
-![2xSpacing Demo](./media/2xSpacing/path.png)
+<p align="center">
+  <img src="./media/2xSpacing/path.png" width="600" />
+  <img src="./media/2xSpacing/errors.png" width="900" />
+  <br>
+  <b>Wider coverage pattern with similar controller behavior as optimal parameters but not necessarily lower average error.</b>
+</p>
 
 ### Final Tuned Parameters
 
-The final configuration achieves smooth motion and a uniform lawnmower pattern.
 
-![Optimal Parameters Demo](./media/optimal_params/path.png)
+<p align="center">
+  <img src="./media/optimal_params/path.png" width="600" />
+  <br>
+  <b>The final configuration achieves smooth motion and a uniform lawnmower pattern.</b>
+</p>
 
 ---
 

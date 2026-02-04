@@ -13,6 +13,7 @@ The goal is to achieve **uniform coverage**, **smooth motion**, and **low cross-
 All experiments follow a **one-parameter-at-a-time** tuning strategy to clearly isolate the effect of each parameter.
 
 Details of this assignment can be found in [assginment_details](./assignment_details.md).
+Report for this assignment can be found in [Assignment_1](./media/report/Assignment_1.pdf).
 
 ---
 
@@ -71,22 +72,16 @@ spacing     = 0.5
 ```
 
 #### Baseline performance and Result:
+Large errors occur primarily during <b>turns and line transitions</b>, motivating gain tuning.
 
 * Average CTE ≈ **0.996**
 * Maximum CTE ≈ **2.111**
 
 <p align="center">
-  <img src="./media/default_params/errors.png" width="600" />
-</p>
-
-<p align="center">
-  <img src="./media/default_params/rqt_plot.png" width="600" />
-</p>
-
-<p align="center">
   <img src="./media/default_params/path.png" width="300" />
-  <br>
-  <b>Large errors occur primarily during <i>turns and line transitions</i>, motivating gain tuning.</b>
+  <img src="./media/default_params/cross_track_error.png" width="400" />
+  <img src="./media/default_params/errors.png" width="600" />
+  <img src="./media/default_params/rqt_plot.png" width="600" />
 </p>
 
 ---
@@ -123,22 +118,17 @@ spacing     = 0.5
 ```
 
 #### Final performance and Result:
+The turtle follows a clean and uniform lawnmower pattern with stable turns.
 
 * Average CTE ≈ **0.061**
 * Maximum CTE ≈ **0.180**
 
 <p align="center">
-  <img src="./media/optimal_params/errors.png" width="600" />
-</p>
-
-<p align="center">
-  <img src="./media/optimal_params/rqt_plot.png" width="600" />
-</p>
-
-<p align="center">
   <img src="./media/optimal_params/path.png" width="300" />
-  <br>
-  <b>The turtle follows a clean and uniform lawnmower pattern with stable turns.</b>
+  <img src="./media/optimal_params/cross_track_error.png" width="400" />
+  <img src="./media/optimal_params/errors.png" width="600" />
+  <img src="./media/optimal_params/rqt_plot.png" width="600" />
+  
 </p>
 
 
@@ -167,49 +157,45 @@ Below are visual demonstrations of how different parameter settings affect the r
 
 ### High Angular Gains
 
-* **10xKp_angular**
+* **10xKp_angular**: Sharper turns with visible oscillations.
 <p align="center">
   <img src="./media/10xKp_angular/path.gif" width="300" />
-  <br>
-  <b>Sharper turns with visible oscillations.</b>
+  <img src="./media/10xKp_angular/rqt_plot.png" width="600" />
 </p>
 
-* **10xKd_angular**
+* **10xKd_angular**: Excessive damping leading to unstable oscillatory motion.
 
 <p align="center">
   <img src="./media/10xKd_angular/path.gif" width="300" />
-  <br>
-  <b>Excessive damping leading to unstable oscillatory motion.</b>
+  <img src="./media/10xKd_angular/rqt_plot.png" width="600" />
 </p>
 
 ### High Linear Gains
 
-* **10xKp_linear**
+* **10xKp_linear**: Failure to converge to the first waypoint.
 
 <p align="center">
   <img src="./media/10xKp_linear/path.gif" width="300" />
-  <br>
-  <b>Failure to converge to the first waypoint.</b>
+  <img src="./media/10xKp_linear/rqt_plot.png" width="600" />
 </p>
 
-* **10xKd_linear**
+* **10xKd_linear**: Oscillations near waypoints and distorted path tracking.
 
 <p align="center">
   <img src="./media/10xKd_linear/path.gif" width="300" />
-  <br>
-  <b>Oscillations near waypoints and distorted path tracking.</b>
+  <img src="./media/10xKd_linear/rqt_plot.png" width="600" />
 </p>
 
 ### Spacing Effect
-**2xSpacing**:
+**2xSpacing**: Wider coverage pattern with similar controller behavior as optimal parameters but not necessarily lower average error.
 * Average CTE ≈ **0.063**
 * Maximum CTE ≈ **0.176**
 
 <p align="center">
-  <img src="./media/2xSpacing/errors.png" width="600" />
   <img src="./media/2xSpacing/path.png" width="300" />
-  <br>
-  <b>Wider coverage pattern with similar controller behavior as optimal parameters but not necessarily lower average error.</b>
+  <img src="./media/2xSpacing/cross_track_error.png" width="400" />
+  <img src="./media/2xSpacing/errors.png" width="600" />
+  <img src="./media/2xSpacing/rqt_plot.png" width="600" />
 </p>
 
 

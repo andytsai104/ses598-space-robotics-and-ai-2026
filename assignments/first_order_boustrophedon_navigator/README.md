@@ -76,15 +76,15 @@ spacing     = 0.5
 * Maximum CTE ≈ **2.111**
 
 <p align="center">
-  <img src="./media/default_params/errors.png" width="900" />
+  <img src="./media/default_params/errors.png" width="600" />
 </p>
 
 <p align="center">
-  <img src="./media/default_params/rqt_plot.png" width="900" />
+  <img src="./media/default_params/rqt_plot.png" width="600" />
 </p>
 
 <p align="center">
-  <img src="./media/default_params/path.png" width="600" />
+  <img src="./media/default_params/path.png" width="300" />
   <br>
   <b>Large errors occur primarily during <i>turns and line transitions</i>, motivating gain tuning.</b>
 </p>
@@ -128,15 +128,15 @@ spacing     = 0.5
 * Maximum CTE ≈ **0.180**
 
 <p align="center">
-  <img src="./media/optimal_params/errors.png" width="900" />
+  <img src="./media/optimal_params/errors.png" width="600" />
 </p>
 
 <p align="center">
-  <img src="./media/optimal_params/rqt_plot.png" width="900" />
+  <img src="./media/optimal_params/rqt_plot.png" width="600" />
 </p>
 
 <p align="center">
-  <img src="./media/optimal_params/path.png" width="600" />
+  <img src="./media/optimal_params/path.png" width="300" />
   <br>
   <b>The turtle follows a clean and uniform lawnmower pattern with stable turns.</b>
 </p>
@@ -169,7 +169,7 @@ Below are visual demonstrations of how different parameter settings affect the r
 
 * **10xKp_angular**
 <p align="center">
-  <img src="./media/10xKp_angular/path.gif" width="600" />
+  <img src="./media/10xKp_angular/path.gif" width="300" />
   <br>
   <b>Sharper turns with visible oscillations.</b>
 </p>
@@ -177,7 +177,7 @@ Below are visual demonstrations of how different parameter settings affect the r
 * **10xKd_angular**
 
 <p align="center">
-  <img src="./media/10xKd_angular/path.gif" width="600" />
+  <img src="./media/10xKd_angular/path.gif" width="300" />
   <br>
   <b>Excessive damping leading to unstable oscillatory motion.</b>
 </p>
@@ -187,7 +187,7 @@ Below are visual demonstrations of how different parameter settings affect the r
 * **10xKp_linear**
 
 <p align="center">
-  <img src="./media/10xKp_linear/path.gif" width="600" />
+  <img src="./media/10xKp_linear/path.gif" width="300" />
   <br>
   <b>Failure to converge to the first waypoint.</b>
 </p>
@@ -195,18 +195,19 @@ Below are visual demonstrations of how different parameter settings affect the r
 * **10xKd_linear**
 
 <p align="center">
-  <img src="./media/10xKd_linear/path.gif" width="600" />
+  <img src="./media/10xKd_linear/path.gif" width="300" />
   <br>
   <b>Oscillations near waypoints and distorted path tracking.</b>
 </p>
 
 ### Spacing Effect
-
-* **2xSpacing**
+**2xSpacing**:
+* Average CTE ≈ **0.063**
+* Maximum CTE ≈ **0.176**
 
 <p align="center">
-  <img src="./media/2xSpacing/path.png" width="600" />
-  <img src="./media/2xSpacing/errors.png" width="900" />
+  <img src="./media/2xSpacing/errors.png" width="600" />
+  <img src="./media/2xSpacing/path.png" width="300" />
   <br>
   <b>Wider coverage pattern with similar controller behavior as optimal parameters but not necessarily lower average error.</b>
 </p>

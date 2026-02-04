@@ -80,7 +80,7 @@ Large errors occur primarily during <b>turns and line transitions</b>, motivatin
 <p align="center">
   <img src="./media/default_params/path.png" width="300" />
   <img src="./media/default_params/cross_track_error.png" width="400" />
-  <img src="./media/default_params/errors.png" width="600" />
+  <img src="./media/default_params/errors.png" width="900" />
   <img src="./media/default_params/rqt_plot.png" width="600" />
 </p>
 
@@ -126,7 +126,7 @@ The turtle follows a clean and uniform lawnmower pattern with stable turns.
 <p align="center">
   <img src="./media/optimal_params/path.png" width="300" />
   <img src="./media/optimal_params/cross_track_error.png" width="400" />
-  <img src="./media/optimal_params/errors.png" width="600" />
+  <img src="./media/optimal_params/errors.png" width="900" />
   <img src="./media/optimal_params/rqt_plot.png" width="600" />
   
 </p>
@@ -194,7 +194,7 @@ Below are visual demonstrations of how different parameter settings affect the r
 <p align="center">
   <img src="./media/2xSpacing/path.png" width="300" />
   <img src="./media/2xSpacing/cross_track_error.png" width="400" />
-  <img src="./media/2xSpacing/errors.png" width="600" />
+  <img src="./media/2xSpacing/errors.png" width="900" />
   <img src="./media/2xSpacing/rqt_plot.png" width="600" />
 </p>
 

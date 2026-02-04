@@ -70,14 +70,24 @@ Kd_angular  = 0.1
 spacing     = 0.5
 ```
 
-**Baseline performance:**
+#### Baseline performance and Result:
 
 * Average CTE ≈ **0.996**
 * Maximum CTE ≈ **2.111**
 
-Large errors occur primarily during **turns and line transitions**, motivating gain tuning.
+<p align="center">
+  <img src="./media/default_params/errors.png" width="900" />
+</p>
 
-![default terminal log](./media/default_params/terminal_log.png)
+<p align="center">
+  <img src="./media/default_params/rqt_plot.png" width="900" />
+</p>
+
+<p align="center">
+  <img src="./media/default_params/path.png" width="600" />
+  <br>
+  <b>Large errors occur primarily during <i>turns and line transitions</i>, motivating gain tuning.</b>
+</p>
 
 ---
 
@@ -112,14 +122,26 @@ Kd_angular  = 0.03
 spacing     = 0.5
 ```
 
-**Final performance:**
+#### Final performance and Result:
 
 * Average CTE ≈ **0.061**
 * Maximum CTE ≈ **0.180**
 
-The turtle follows a clean and uniform lawnmower pattern with stable turns.
+<p align="center">
+  <img src="./media/optimal_params/errors.png" width="900" />
+</p>
 
-![optimal terminal log](./media/optimal_params/terminal_log.png)
+<p align="center">
+  <img src="./media/optimal_params/rqt_plot.png" width="900" />
+</p>
+
+<p align="center">
+  <img src="./media/optimal_params/path.png" width="600" />
+  <br>
+  <b>The turtle follows a clean and uniform lawnmower pattern with stable turns.</b>
+</p>
+
+
 
 ---
 
@@ -142,10 +164,6 @@ rqt_plot /turtle1/pose/x /turtle1/pose/y \
 
 Below are visual demonstrations of how different parameter settings affect the robot behavior. Each animation shows the TurtleSim trajectory under a specific configuration.
 
-### Baseline (Default Parameters)
-<p align="center">
-  <img src="./media/default_params/path.gif" width="600" />
-</p>
 
 ### High Angular Gains
 
@@ -193,14 +211,8 @@ Below are visual demonstrations of how different parameter settings affect the r
   <b>Wider coverage pattern with similar controller behavior as optimal parameters but not necessarily lower average error.</b>
 </p>
 
-### Final Tuned Parameters
 
 
-<p align="center">
-  <img src="./media/optimal_params/path.png" width="600" />
-  <br>
-  <b>The final configuration achieves smooth motion and a uniform lawnmower pattern.</b>
-</p>
 
 ---
 

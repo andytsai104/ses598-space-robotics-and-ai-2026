@@ -14,7 +14,6 @@ def generate_launch_description():
         # Gazebo (headless mode)
         ExecuteProcess(
             cmd=['gz', 'sim', '-r', '-s', 'empty.sdf'],  # -s for headless mode
-            output='screen'
         ),
 
         # Spawn robot in Gazebo

@@ -146,10 +146,10 @@ From physical intuition:
 
 Experiments performed:
 
-1. 100× q1  
-2. 100× q3  
-3. 0.01× r1
-4. Optimal parameters
+1. [100× q1](#experiment-1--100-q1)  
+2. [100× q3](#experiment-2--100-q3) 
+3. [0.01× r1](#experiment-3--001-r1)
+4. [Optimal parameters](#optimal-parameters)
 
 Each parameter was scaled independently to isolate behavior changes.
 
@@ -201,7 +201,7 @@ R = [[1.0]]
 </p>
 
 **Brief Summary**
-Increasing \(q_3\) significantly strengthens pole-angle regulation, keeping the stick upright throughout the simulation. However, cart position is no longer well regulated, and the cart drifts until it reaches the ±2.5 m boundary. The controller prioritizes minimizing \(\theta\) error over maintaining \(x \approx 0\), leading to early termination despite good angle stability.
+Increasing $q_3$ significantly strengthens pole-angle regulation, keeping the stick upright throughout the simulation. However, cart position is no longer well regulated, and the cart drifts until it reaches the ±2.5 m boundary. The controller prioritizes minimizing $\theta$ error over maintaining $x \approx 0$, leading to early termination despite good angle stability.
 
 
 ---
@@ -227,7 +227,7 @@ R = [[0.01]]
 </p>
 
 **Brief Summary**
-Reducing \(R\) matrix makes control effort cheap, allowing the controller to react aggressively to disturbances and keep the cart near \(x \approx 0\) for the full simulation duration. However, this leads to strong oscillations and large pole-angle deviations, with significant control-force spikes. The system remains stable overall, but the response is much less smooth.
+Reducing $R$ matrix makes control effort cheap, allowing the controller to react aggressively to disturbances and keep the cart near $x \approx 0$ for the full simulation duration. However, this leads to strong oscillations and large pole-angle deviations, with significant control-force spikes. The system remains stable overall, but the response is much less smooth.
 
 ---
 
@@ -251,7 +251,7 @@ R = [[0.01]]
 </p>
 
 **Brief Summary**
-This configuration achieves the best overall balance between cart regulation and pole stabilization. The cart remains tightly controlled around \(x \approx 0\), while the pole angle stays within a very small deviation despite strong earthquake disturbances. By increasing the pole-angle weight and reducing the control penalty, the controller becomes responsive enough to reject disturbances without introducing excessive oscillations, resulting in the highest stability score among all experiments.
+This configuration achieves the best overall balance between cart regulation and pole stabilization. The cart remains tightly controlled around $x \approx 0$, while the pole angle stays within a very small deviation despite strong earthquake disturbances. By increasing the pole-angle weight and reducing the control penalty, the controller becomes responsive enough to reject disturbances without introducing excessive oscillations, resulting in the highest stability score among all experiments.
 
 ---
 

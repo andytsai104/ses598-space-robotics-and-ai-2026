@@ -24,28 +24,40 @@ A systematic **one-parameter-at-a-time scaling strategy** is used to isolate the
 
 The state vector is defined as:
 
-$$x = \begin{bmatrix} x \\ \dot{x} \\ \theta \\ \dot{\theta} \end{bmatrix}$$
+$$
+x = \begin{bmatrix} x \\ \dot{x} \\ \theta \\ \dot{\theta} \end{bmatrix}
+$$
 
-$$u=-Kx$$
+$$
+u = -Kx
+$$
 
-Where $x$ is the state vector and $u$ is the control input (cart force) at time t.
-
+Where $x$ is the state vector and $u$ is the control input (cart force) at time $t$.
 
 The LQR controller minimizes the following cost function:
 
-$$J = \int_{0}^{\infty} (x^T Q x + u^T R u) dt$$
+$$
+J = \int_{0}^{\infty} (x^T Q x + u^T R u) dt
+$$
 
 ### Weighting Matrices
 
 The performance of the controller is tuned using the $Q$ and $R$ matrices:
 
-* **State Weighting Matrix ($Q$):** Penalizes state deviations from the equilibrium.
-    $$Q = \begin{bmatrix} q_x & 0 & 0 & 0 \\ 0 & q_{\dot{x}} & 0 & 0 \\ 0 & 0 & q_{\theta} & 0 \\ 0 & 0 & 0 & q_{\dot{\theta}} \end{bmatrix} = \begin{bmatrix} q_1 & 0 & 0 & 0 \\ 0 & q_2 & 0 & 0 \\ 0 & 0 & q_3 & 0 \\ 0 & 0 & 0 & q_4 \end{bmatrix}$$
-    * $q_1, q_2$: Weights for cart position and velocity.
-    * $q_3, q_4$: Weights for pendulum angle and angular velocity.
+**State Weighting Matrix ($Q$):** Penalizes state deviations from the equilibrium.
 
-* **Control Weighting Matrix ($R$):** Penalizes the control effort.
-    $$R = [\rho] = [r]$$
+$$
+Q = \begin{bmatrix} q_x & 0 & 0 & 0 \\ 0 & q_{\dot{x}} & 0 & 0 \\ 0 & 0 & q_{\theta} & 0 \\ 0 & 0 & 0 & q_{\dot{\theta}} \end{bmatrix} = \begin{bmatrix} q_1 & 0 & 0 & 0 \\ 0 & q_2 & 0 & 0 \\ 0 & 0 & q_3 & 0 \\ 0 & 0 & 0 & q_4 \end{bmatrix}
+$$
+
+* $q_1, q_2$: Weights for cart position and velocity.
+* $q_3, q_4$: Weights for pendulum angle and angular velocity.
+
+**Control Weighting Matrix ($R$):** Penalizes the control effort.
+
+$$
+R = [\rho] = [r]
+$$
 
 ---
 

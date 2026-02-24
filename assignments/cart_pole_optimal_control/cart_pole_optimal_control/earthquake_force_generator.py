@@ -32,9 +32,9 @@ class EarthquakeForceGenerator(Node):
         )
         
         # Parameters for earthquake simulation
-        self.declare_parameter('base_amplitude', 15.0)  # Base force amplitude in N
+        self.declare_parameter('base_amplitude', 50.0)  # Base force amplitude in N
         self.declare_parameter('frequency_range', [0.5, 4.0])  # Frequency range in Hz
-        self.declare_parameter('update_rate', 50.0)  # Update rate in Hz
+        self.declare_parameter('update_rate', 20.0)  # Update rate in Hz
         
         # Timer for force updates
         update_period = 1.0 / self.get_parameter('update_rate').value

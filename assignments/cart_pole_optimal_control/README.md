@@ -40,6 +40,8 @@ $$
 J = \int_{0}^{\infty} (x^T Q x + u^T R u) dt
 $$
 
+
+
 ### Weighting Matrices
 
 The performance of the controller is tuned using the $Q$ and $R$ matrices:

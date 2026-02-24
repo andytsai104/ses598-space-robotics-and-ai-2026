@@ -1,0 +1,5 @@
+# LQR cost matrices
+self.Q = np.diag([1.0, 1.0, 1.0, 1.0])  # State cost
+self.R = np.array([[1.0]])  # Control cost
+# Max Simulation duration
+self.MAX_SIMULATION_TIME = 120.0  # Set to desired duration

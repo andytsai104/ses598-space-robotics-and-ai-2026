@@ -121,7 +121,7 @@ Experiments performed:
 1. 100× q1  
 2. 100× q3  
 3. 0.01× r1
-4. Optimal parameters
+4. Optimal parameters ()
 
 Each parameter was scaled independently to isolate behavior changes.
 
@@ -216,21 +216,29 @@ R = [[0.01]]
 **Brief Summary**
 Reducing \(R\) matrix makes control effort cheap, allowing the controller to react aggressively to disturbances and keep the cart near \(x \approx 0\) for the full simulation duration. However, this leads to strong oscillations and large pole-angle deviations, with significant control-force spikes. The system remains stable overall, but the response is much less smooth.
 
-<!-- ---
+---
 
-## Final Tuned Parameters
+## Optimal Parameters
 
 ```text
-Q = diag([20.0, 1.0, 200.0, 20.0])  
-R = [[0.1]]
+Q = diag([1.0, 1.0, 100.0, 10.0]) 
+R = [[0.01]]     
 ```
 **Performance and Result**
 - Duration: **40.01 s**
-- Max cart displacement: **0.369 m**
-- Max pole angle deviation: **2.848°**
-- Avg control effort: **1.344 N**
-- Stability score: **8.63 / 10** -->
+- Max cart displacement: **0.028 m**
+- Max pole angle deviation: **0.812°**
+- Avg control effort: **1.133 N**
+- Stability score: **9.73 / 10**
 
+<p align="center">
+  <img src="./media/optimal_params/terminal_log.png" width="600" />
+  <img src="./media/optimal_params/plots.png" width="600" />
+  <img src="./media/optimal_params/sim.gif" width="600" />
+</p>
+
+**Brief Summary**
+This configuration achieves the best overall balance between cart regulation and pole stabilization. The cart remains tightly controlled around \(x \approx 0\), while the pole angle stays within a very small deviation despite strong earthquake disturbances. By increasing the pole-angle weight and reducing the control penalty, the controller becomes responsive enough to reject disturbances without introducing excessive oscillations, resulting in the highest stability score among all experiments.
 
 ---
 

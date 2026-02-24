@@ -1,3 +1,0 @@
-# LQR cost matrices
-self.Q = np.diag([100.0, 1.0, 1.0, 1.0])  # State cost
-self.R = np.array([[1.0]])  # Control cost

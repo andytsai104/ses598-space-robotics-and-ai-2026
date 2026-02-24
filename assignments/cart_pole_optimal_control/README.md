@@ -25,7 +25,7 @@ A systematic **one-parameter-at-a-time scaling strategy** is used to isolate the
 The state vector is defined as:
 
 $$
-x = \begin{bmatrix} x \\ \dot{x} \\ \theta \\ \dot{\theta} \end{bmatrix}
+x = [x, \dot{x}, \theta, \dot{\theta}]^T
 $$
 
 $$
@@ -49,7 +49,7 @@ The performance of the controller is tuned using the $Q$ and $R$ matrices:
 **State Weighting Matrix ($Q$):** Penalizes state deviations from the equilibrium.
 
 $$
-Q = \begin{bmatrix} q_x & 0 & 0 & 0 \\ 0 & q_{\dot{x}} & 0 & 0 \\ 0 & 0 & q_{\theta} & 0 \\ 0 & 0 & 0 & q_{\dot{\theta}} \end{bmatrix} = \begin{bmatrix} q_1 & 0 & 0 & 0 \\ 0 & q_2 & 0 & 0 \\ 0 & 0 & q_3 & 0 \\ 0 & 0 & 0 & q_4 \end{bmatrix}
+Q = diag([q_x, q_{\dot{x}}, q_{\theta}, q_{\dot{\theta}}]) = diag([q_1, q_2, q_3, q_4])
 $$
 
 * $q_1, q_2$: Weights for cart position and velocity.

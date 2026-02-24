@@ -93,6 +93,20 @@ Each folder under `media/` contains:
 - `sim.gif` – Simulation 
 - `terminal_log.png` – Terminal output
 
+---
+
+## Run the Simulation
+
+Run simulation in Gazebo
+```bash
+ros2 launch cart_pole_optimal_control cart_pole.launch.py
+```
+
+Tune forces to the cartpole system
+
+```bash
+ros2 launch cart_pole_optimal_control cart_pole_rviz.launch.py
+```
 
 ---
 
@@ -135,24 +149,9 @@ Experiments performed:
 1. 100× q1  
 2. 100× q3  
 3. 0.01× r1
-4. Optimal parameters ()
+4. Optimal parameters
 
 Each parameter was scaled independently to isolate behavior changes.
-
----
-
-## Running the Simulation
-
-Run the simulation in Gazebo
-```bash
-ros2 launch cart_pole_optimal_control cart_pole.launch.py
-```
-
-Tune the force to the cartpole system
-
-```bash
-ros2 launch cart_pole_optimal_control cart_pole_rviz.launch.py
-```
 
 ---
 

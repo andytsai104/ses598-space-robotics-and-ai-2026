@@ -7,6 +7,7 @@ from geometry_msgs.msg import PoseWithCovarianceStamped
 from visualization_msgs.msg import MarkerArray, Marker
 from rclpy.qos import QoSProfile, ReliabilityPolicy, HistoryPolicy, DurabilityPolicy
 import numpy as np
+np.float = float
 from transforms3d.euler import quat2euler, euler2quat
 
 class PoseVisualizer(Node):
@@ -58,21 +59,21 @@ class PoseVisualizer(Node):
         
         # X axis (red)
         x_marker = self.create_arrow_marker(
-            [1, 0, 0, 1],  # red
+            [1.0, 0.0, 0.0, 1.0],  # red
             0
         )
         self.markers.markers.append(x_marker)
         
         # Y axis (green)
         y_marker = self.create_arrow_marker(
-            [0, 1, 0, 1],  # green
+            [0.0, 1.0, 0.0, 1.0],  # green
             1
         )
         self.markers.markers.append(y_marker)
         
         # Z axis (blue)
         z_marker = self.create_arrow_marker(
-            [0, 0, 1, 1],  # blue
+            [0.0, 0.0, 1.0, 1.0],  # blue
             2
         )
         self.markers.markers.append(z_marker)

@@ -32,7 +32,10 @@ setup(
             glob('models/cylinder_small/materials/textures/*.*')),
         ('lib/' + package_name, [
             'terrain_mapping_drone_control/cylinder_landing_node.py',
-            'terrain_mapping_drone_control/aruco_tracker.py'
+            'terrain_mapping_drone_control/aruco_tracker.py',
+            'terrain_mapping_drone_control/pose_visualizer.py',
+            'terrain_mapping_drone_control/auto_detect_land.py',
+            'terrain_mapping_drone_control/geometry_tracker.py',
         ]),
         ('share/' + package_name + '/models/cylinder_short',
             glob('models/cylinder_short/*.*')),
@@ -56,6 +59,8 @@ setup(
             'pose_visualizer = terrain_mapping_drone_control.pose_visualizer:main',
             'spiral_trajectory = terrain_mapping_drone_control.spiral_trajectory:main',
             'aruco_tracker = terrain_mapping_drone_control.aruco_tracker:main',
+            'auto_detect_land = terrain_mapping_drone_control.auto_detect_land:main',
+            'geometry_tracker = terrain_mapping_drone_control.geometry_tracker:main',
         ],
     },
     python_requires='>=3.8'

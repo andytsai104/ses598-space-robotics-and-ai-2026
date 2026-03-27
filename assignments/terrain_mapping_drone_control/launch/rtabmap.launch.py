@@ -24,8 +24,9 @@ def generate_launch_description():
 
         # RTAB-Map node
         Node(
-            package='rtabmap_ros',
+            package='rtabmap_slam',
             executable='rtabmap',
+            arguments=['-d'],
             name='rtabmap',
             output='screen',
             parameters=[{
@@ -36,7 +37,8 @@ def generate_launch_description():
                 'subscribe_depth': True,
                 'subscribe_rgb': True,
                 'approx_sync': True,
-                'queue_size': 10,
+                'queue_size': 50,
+                'approx_sync_max_interval': 0.1,
                 
                 # Odometry parameters
                 'odom_frame_id': 'odom',
@@ -65,9 +67,9 @@ def generate_launch_description():
             }],
             remappings=[
                 # Camera topics
-                ('rgb/image', '/camera/rgb/image_raw'),
-                ('depth/image', '/camera/depth/image_raw'),
-                ('rgb/camera_info', '/camera/rgb/camera_info'),
+                ('rgb/image', '/drone/front_rgb'),
+                ('depth/image', '/drone/front_depth'),
+                ('rgb/camera_info', '/drone/front_rgb/camera_info'),
                 
                 # Odometry from PX4
                 ('odom', '/fmu/out/vehicle_odometry'),
@@ -82,7 +84,7 @@ def generate_launch_description():
 
         # RTAB-Map point cloud generation
         Node(
-            package='rtabmap_ros',
+            package='rtabmap_util',
             executable='point_cloud_xyz',
             name='point_cloud_xyz',
             parameters=[{
@@ -93,8 +95,8 @@ def generate_launch_description():
                 'min_depth': 0.4
             }],
             remappings=[
-                ('depth/image', '/camera/depth/image_raw'),
-                ('depth/camera_info', '/camera/depth/camera_info'),
+                ('depth/image', '/drone/front_depth'),
+                ('depth/camera_info', '/drone/front_depth/camera_info'),
                 ('cloud', 'cloud_xyz')
             ]
         ),

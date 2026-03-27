@@ -29,8 +29,10 @@ def generate_launch_description():
     px4_autopilot_path = LaunchConfiguration('px4_autopilot_path')
     
     # Launch PX4 SITL with x500_depth
+    # drone_model_name = 'x500_gimbal'
+    drone_model_name = 'x500_depth'
     px4_sitl = ExecuteProcess(
-        cmd=['make', 'px4_sitl', 'gz_x500_gimbal'],
+        cmd=['make', 'px4_sitl', f'gz_{drone_model_name}'],
         cwd=px4_autopilot_path,
         output='screen'
     )
@@ -89,20 +91,33 @@ def generate_launch_description():
         }],
         arguments=[
             # Camera topics (one-way from Gazebo to ROS)
-            '/world/default/model/x500_gimbal_0/link/camera_link/sensor/camera/image@sensor_msgs/msg/Image[gz.msgs.Image',
-            '/world/default/model/x500_gimbal_0/link/camera_link/sensor/camera/camera_info@sensor_msgs/msg/CameraInfo[gz.msgs.CameraInfo',
-            '/model/x500_gimbal_0/command/gimbal_roll@std_msgs/msg/Float64@gz.msgs.Double',
-            '/model/x500_gimbal_0/command/gimbal_pitch@std_msgs/msg/Float64@gz.msgs.Double',
-            '/model/x500_gimbal_0/command/gimbal_yaw@std_msgs/msg/Float64@gz.msgs.Double',
+            f'/world/default/model/{drone_model_name}_0/link/camera_link/sensor/camera/image@sensor_msgs/msg/Image[gz.msgs.Image',
+            f'/world/default/model/{drone_model_name}_0/link/camera_link/sensor/camera/camera_info@sensor_msgs/msg/CameraInfo[gz.msgs.CameraInfo',
+            # f'/model/{drone_model_name}_0/command/gimbal_roll@std_msgs/msg/Float64@gz.msgs.Double',
+            # f'/model/{drone_model_name}_0/command/gimbal_pitch@std_msgs/msg/Float64@gz.msgs.Double',
+            # f'/model/{drone_model_name}_0/command/gimbal_yaw@std_msgs/msg/Float64@gz.msgs.Double',
+
+            # Depth camera image (from Gazebo to ROS)
+            '/depth_camera@sensor_msgs/msg/Image[gz.msgs.Image',
+            '/camera_info@sensor_msgs/msg/CameraInfo[gz.msgs.CameraInfo',
+
             # PX4 odometry (one-way from Gazebo to ROS)
-            '/model/x500_gimbal_0/odometry_with_covariance@nav_msgs/msg/Odometry[gz.msgs.Odometry',
+            f'/model/{drone_model_name}_0/odometry_with_covariance@nav_msgs/msg/Odometry[gz.msgs.Odometry',
+            
             # Clock (one-way from Gazebo to ROS)
-            '/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock',
+            f'/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock',
         ],
         remappings=[
-            ('/world/default/model/x500_gimbal_0/link/camera_link/sensor/camera/image', '/drone_camera'),
-            ('/world/default/model/x500_gimbal_0/link/camera_link/sensor/camera/camera_info', '/drone_camera_info'),
-            ('/model/x500_gimbal_0/odometry_with_covariance', '/fmu/out/vehicle_odometry'),
+            # (f'/world/default/model/{drone_model_name}_0/link/camera_link/sensor/camera/image', '/drone_camera'),
+            # (f'/world/default/model/{drone_model_name}_0/link/camera_link/sensor/camera/camera_info', '/drone_camera_info'),
+            (f'/world/default/model/{drone_model_name}_0/link/camera_link/sensor/camera/image', '/drone/front_rgb'),
+            (f'/world/default/model/{drone_model_name}_0/link/camera_link/sensor/camera/camera_info', '/drone/front_rgb/camera_info'),
+
+            # Depth topics to the mission node names
+            ('/depth_camera', '/drone/front_depth'),
+            ('/camera_info', '/drone/front_depth/camera_info'),
+
+            (f'/model/{drone_model_name}_0/odometry_with_covariance', '/fmu/out/vehicle_odometry'),
         ],
         output='screen'
     )

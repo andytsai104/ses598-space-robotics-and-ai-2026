@@ -6,6 +6,7 @@ from sensor_msgs.msg import Image, CameraInfo
 from cv_bridge import CvBridge
 import cv2
 import numpy as np
+np.float = float
 from geometry_msgs.msg import TransformStamped, Point
 from tf2_ros import TransformBroadcaster
 from std_msgs.msg import String

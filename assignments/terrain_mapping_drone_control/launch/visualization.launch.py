@@ -28,7 +28,7 @@ def generate_launch_description():
     # Launch pose visualizer
     pose_visualizer = Node(
         package='terrain_mapping_drone_control',
-        executable='pose_visualizer',
+        executable='pose_visualizer.py',
         name='pose_visualizer',
         output='screen'
     )
